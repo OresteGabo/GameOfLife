@@ -117,4 +117,53 @@ public class Grille
         }
         return false;
     }
+
+    /**
+     * Une cellule vide devient pleine si elle a exactement 3 voisins
+     * Une cellule pleine continue de l'etre si elle a 2 ou 3 voisin
+     * Une cellule pleine si elle a mois de 2 voisin elle mort d'isolement
+     * Une cellule pleine , si elle a plus de 3 voisins elle meurt de surpopulation
+     */
+    public void play() {
+        int[][] newTab = new int[getNbLig()][getNbCol()];
+
+        // Iterate through each cell in the grid
+        for (int i = 0; i < getNbLig(); i++) {
+            for (int j = 0; j < getNbCol(); j++) {
+                int liveNeighbors = nbLivesAround(i, j);
+
+                if (isLife(i, j)) {
+                    // Any live cell with 2 or 3 live neighbors survives.
+                    if (liveNeighbors == 2 || liveNeighbors == 3) {
+                        newTab[i][j] = -1;
+                    } else {
+                        // Any live cell with fewer than 2 or more than 3 live neighbors dies.
+                        newTab[i][j] = 0;
+                    }
+                } else {
+                    // Any dead cell with exactly 3 live neighbors becomes a live cell.
+                    if (liveNeighbors == 3) {
+                        newTab[i][j] = -1;
+                    } else {
+                        newTab[i][j] = 0;
+                    }
+                }
+            }
+        }
+
+
+        // Update the grid with the new state
+        setTab(newTab);
+        updateNeighbors();
+    }
+    private void updateNeighbors(){
+        for (int i = 0; i < getNbLig(); i++) {
+            for (int j = 0; j < getNbCol(); j++) {
+                if(!isLife(i,j)){
+                    tab[i][j]=nbLivesAround(i,j);
+                }
+            }
+        }
+    }
+
 }
