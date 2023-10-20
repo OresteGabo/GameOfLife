@@ -44,6 +44,39 @@ public class Grille
             }
         }
     }
+    public Grille(int l,int c, int nbVies)
+    {
+        // Création de la Grille
+        Random r = new Random();
+        setNbLig(l);
+        setNbCol(c);
+
+        int[][] tab = new int[l][c];
+        for (int i = 0; i < l; i++) {
+            for (int j = 0; j < c; j++) {
+                tab[i][j] = 0;
+            }
+        }
+        int m = 0;
+        while (m < nbVies) {
+            int x = r.nextInt(l);
+            int y = r.nextInt(c);
+            if (tab[x][y] == 0) // Sinon il y a déjà une vie à cet emplacement
+            {
+                tab[x][y] = -1;
+                m++;
+            }
+        }
+        setTab(tab);
+        // On remplit les autres cases
+        for (int i = 0; i < l; i++) {
+            for (int j = 0; j < c; j++) {
+                if (tab[i][j] != -1) {
+                    tab[i][j] = nbLivesAround( i, j);
+                }
+            }
+        }
+    }
 
     public int getNbLig() {
         return nbLig;

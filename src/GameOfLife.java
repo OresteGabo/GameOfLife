@@ -46,7 +46,10 @@ public class GameOfLife {
         init();
     }
     public GameOfLife(int lc, int nbVies) {
-        this.grille=new Grille(lc,nbVies);
+        new GameOfLife(lc,lc,nbVies);
+    }
+    public GameOfLife(int l, int c,int nbVies) {
+        this.grille=new Grille(l,c,nbVies);
         init();
     }
     private void init(){
